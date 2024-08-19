@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
 public class ClientController {
 
     @Autowired
@@ -36,5 +36,10 @@ public class ClientController {
                 .buildAndExpand(dto.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(service.insert(dto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO dto) {
+        return ResponseEntity.ok(service.update(id, dto));
     }
 }

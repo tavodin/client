@@ -4,6 +4,7 @@ import com.tavo.client.dto.ClientDTO;
 import com.tavo.client.entities.Client;
 import com.tavo.client.repositories.ClientRepository;
 import com.tavo.client.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,18 @@ public class ClientService {
         copyDtoToEntity(clientDTO, client);
         repository.save(client);
         return new ClientDTO(client);
+    }
+
+    @Transactional
+    public ClientDTO update(Long id, ClientDTO clientDTO) {
+        try {
+            Client client = repository.getReferenceById(id);
+            copyDtoToEntity(clientDTO, client);
+            client = repository.save(client);
+            return new ClientDTO(client);
+        }catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
     }
 
     private void copyDtoToEntity(ClientDTO dto, Client client) {
