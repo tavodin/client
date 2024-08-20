@@ -1,6 +1,7 @@
 package com.tavo.client.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -11,9 +12,8 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
 
-    @Column(unique = true)
+    private String name;
     private String cpf;
     private Double income;
     private LocalDate birthDate;

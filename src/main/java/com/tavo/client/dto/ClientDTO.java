@@ -1,15 +1,21 @@
 package com.tavo.client.dto;
 
 import com.tavo.client.entities.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
 public class ClientDTO {
 
     private Long id;
+
+    @NotBlank(message = "Campo requerido")
     private String name;
     private String cpf;
     private Double income;
+
+    @PastOrPresent(message = "Data maior que a data atual")
     private LocalDate birthDate;
     private Integer children;
 
